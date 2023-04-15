@@ -6,6 +6,11 @@ from connect_sqlite import connect, get_current_time
 
 
 def download_games():
+    """
+    Downloads all NBA games for all NBA teams using the NBA API
+    :return: DataFrame of games
+    """
+
     nba_teams = teams.get_teams()
     nba_teams = pd.DataFrame(nba_teams)
     ids = list(nba_teams['id'])
@@ -41,11 +46,22 @@ def download_games():
 
 
 def get_last_update(CONNECTION):
+    """
+    :param CONNECTION: Connection object representing the connection to the SQLite database.
+    :return: Date of the last update
+    """
+
     df = pd.read_sql_query('SELECT Date FROM Last_Updated WHERE Type = "game"', CONNECTION)
     return df.values[0][0]
 
 
 def get_new_games(start_date):
+    """
+    Retrieves all NBA games that occurred after the specified start_date and returns a pandas DataFrame containing the games
+    :param start_date: Date to start retrieving NBA games from
+    :return: DataFrame of games
+    """
+
     result = leaguegamefinder.LeagueGameFinder(date_from_nullable=start_date, league_id_nullable='00')
     games_toadd = result.get_data_frames()[0]
 
@@ -94,12 +110,20 @@ def combine_team_games(df, keep_method='home'):
     return result
 
 def save_sql(games_toadd, games_toadd_merged, CONNECTION, new_date):
+    """
+    Saves NBA game data to a SQLite database
+    :param games_toadd: DataFrame unmerged NBA games to add to the database
+    :param games_toadd_merged: DataFrame merged NBA games to add to the database
+    :param CONNECTION: Connection object representing the connection to the SQLite database
+    :param new_date: Date of the last NBA game
+    :return: None
+    """
     games_toadd.to_sql('ALL_GAMES_UNMERGED', CONNECTION, if_exists='append', index=False)
     games_toadd_merged.to_sql('ALL_GAMES_MERGED', CONNECTION, if_exists='append', index=False)
 
     df = pd.read_sql_query('SELECT * FROM Last_Updated', CONNECTION)
     df = df.set_index('Type')
-    df.loc['game'].at['Date'] = new_date
+    df.at['game', 'Date'] = new_date
     df.to_sql('Last_Updated', CONNECTION, if_exists='replace')
 
     return 0
@@ -108,35 +132,43 @@ def save_sql(games_toadd, games_toadd_merged, CONNECTION, new_date):
 if __name__ == "__main__":
     download_all = None
 
+    # Connect to the SQLite database.
     with connect() as CONNECTION:
         CONNECTION = connect()
 
         try:
+            # Get the last update date from the database.
             last_date = get_last_update(CONNECTION)
             last_date = datetime.strptime(last_date, '%m/%d/%Y').date()
             start_date = last_date + timedelta(days=1)
             start_date = start_date.strftime('%m/%d/%Y')
 
+            # Only download games from the start_date onward.
             download_all = False
         except:
+            # If there are no games in the database yet, download all games.
             print('No games currently in database')
             download_all = True
 
         if download_all == True:
+            # Download all games
             games_toadd = download_games()
             games_toadd_merged = combine_team_games(games_toadd)
 
         elif download_all == False:
+            # Download only new games
             games_toadd = get_new_games(start_date)
             games_toadd_merged = combine_team_games(games_toadd)
 
         else:
             print('Error downloading games')
 
+        # Get the current date for the new update.
         new_date = datetime.today() - timedelta(days=1)
-        new_date = new_date.strftime('%m/%d/%Y') #WANT TO RUN MORNING AFTER ALL GAMES FROM PREVIOUS NIGHT FINISHED
+        new_date = new_date.strftime('%m/%d/%Y')  # WANT TO RUN MORNING AFTER ALL GAMES FROM PREVIOUS NIGHT FINISHED
 
+        # Save the downloaded games to the database and update the last update date.
         save_sql(games_toadd, games_toadd_merged, CONNECTION, new_date)
 
+        # Log the number of games downloaded and the new last update date.
         print(F'{get_current_time()}: Added {len(games_toadd_merged)} games, up to date through {new_date}')
-
