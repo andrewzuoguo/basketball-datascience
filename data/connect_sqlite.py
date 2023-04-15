@@ -3,7 +3,7 @@ from datetime import datetime
 
 def connect():
     try:
-        conn = sqlite3.connect("nba.db")
+        conn = sqlite3.connect("nba-data.db")
     except Exception as error:
         print(error)
 
