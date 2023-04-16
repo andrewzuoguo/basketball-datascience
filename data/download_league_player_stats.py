@@ -44,7 +44,8 @@ def download_league_player_stats(seasons, current_season=False):
                     temp['SEASON'] = season
                     league_stats = pd.concat([league_stats, temp])
 
-            except:
+            except Exception as e:
+                print("Encountered Error while downloading league-player stats ", e)
                 continue
 
             break
@@ -57,9 +58,9 @@ def download_league_player_stats(seasons, current_season=False):
     return league_stats, player_id, team_id
 
 
-def download_player_pt_shots(player_id, team_id, season, CONNECTION, current = False):
+def download_player_pt_shots(player_id, team_id, season, CONNECTION, current=False):
     """
-    Downloads shooting data for all NBA players for a given season. Shooting data is available beginning in the 2013-14 NBA season.
+    Downloads shooting data for all NBA players for a given season. Shooting data is available beginning in the 2014-15 NBA season.
     More info at https://www.nba.com/stats/players/shots-general
 
     :param player_id: 1D numpy array of player IDs
@@ -76,17 +77,18 @@ def download_player_pt_shots(player_id, team_id, season, CONNECTION, current = F
         while True:
             try:
                 result = playerdashptshots.PlayerDashPtShots(t_id, p_id, season=season).get_data_frames()
-            except:
+            except Exception as e:
+                print("Encountered Error while downloading Player-Point-Shots ", e)
                 continue
             break
 
         for i, df in enumerate(result):
             dfs[i] = pd.concat([dfs[i], df])
-            dfs[i]['SEASON'] = season
 
     if current:
         table_names = ['SHOT_OVERALL_CURRENT', 'SHOT_TYPE_CURRENT', 'SHOT_CLOCK_CURRENT', 'SHOT_DRIBBLE_CURRENT', 'SHOT_CLOSEDEF_CURRENT', 'SHOT_CLOSEDEF_10PLUS_CURRENT', 'SHOT_TOUCHTIME_CURRENT']
         for name, df in zip(table_names, dfs):
+            df['SEASON'] = season
             df.to_sql(name, CONNECTION, if_exists='replace')
 
     else:
@@ -111,7 +113,7 @@ if __name__ == '__main__':
             league_stats.to_sql('LEAGUE_PLAYER_STATS_PAST', conn, if_exists='replace')
             print(f'{get_current_time()}: Added {len(league_stats)} League-Player Stats (Past)')
 
-            seasons = get_seasons(START=2013, END=2021)
+            seasons = get_seasons(START=2014, END=2021)
             for season in seasons:
                 league_stats, player_id, team_id = download_league_player_stats(season)
                 download_player_pt_shots(player_id, team_id, season, conn, current=False)
@@ -119,9 +121,9 @@ if __name__ == '__main__':
 
 
         #Update current season only
-        current_season = '2022-23'
+        current_season = ['2022-23']
 
-        league_stats, player_id, team_id = download_league_player_stats(current_season)
+        league_stats, player_id, team_id = download_league_player_stats(current_season, current_season=True)
         league_stats.to_sql('LEAGUE_PLAYER_STATS_CURRENT', conn, if_exists='replace')
         print(f'{get_current_time()}: Updated {len(league_stats)} League-Player Stats')
 
