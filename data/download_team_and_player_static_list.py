@@ -5,9 +5,9 @@ from connect_sqlite import connect
 def download_static(conn):
     """
     Downloads:
-    - List of NBA Teams
-    - List of Active Players
-    - List of Inactive Players
+        - List of NBA Teams
+        - List of Active Players
+        - List of Inactive Players
     Saves to separate table in connected SQLite database
 
     :param conn: Connection object representing the connection to the SQLite database

@@ -7,7 +7,8 @@ from connect_sqlite import connect, get_current_time
 
 def download_games():
     """
-    Downloads all NBA games for all NBA teams using the NBA API
+    Downloads all NBA games for all NBA teams
+
     :return: DataFrame of games
     """
 
@@ -47,6 +48,8 @@ def download_games():
 
 def get_last_update(CONNECTION):
     """
+    Read the most recent date of updating Games table
+
     :param CONNECTION: Connection object representing the connection to the SQLite database.
     :return: Date of the last update
     """
@@ -58,6 +61,7 @@ def get_last_update(CONNECTION):
 def get_new_games(start_date):
     """
     Retrieves all NBA games that occurred after the specified start_date and returns a pandas DataFrame containing the games
+
     :param start_date: Date to start retrieving NBA games from
     :return: DataFrame of games
     """
@@ -69,23 +73,20 @@ def get_new_games(start_date):
 
 
 def combine_team_games(df, keep_method='home'):
-    '''Combine a TEAM_ID-GAME_ID unique table into rows by game. Slow.
+    """
+    Combine a TEAM_ID-GAME_ID unique table into rows by game
 
-        Parameters
-        ----------
-        df : Input DataFrame.
-        keep_method : {'home', 'away', 'winner', 'loser', ``None``}, default 'home'
+    :param df: DataFrame of games to merge
+    :param keep_method: {'home', 'away', 'winner', 'loser', ``None``}, default 'home'
             - 'home' : Keep rows where TEAM_A is the home team.
             - 'away' : Keep rows where TEAM_A is the away team.
             - 'winner' : Keep rows where TEAM_A is the losing team.
             - 'loser' : Keep rows where TEAM_A is the winning team.
             - ``None`` : Keep all rows. Will result in an output DataFrame the same
                 length as the input DataFrame.
+    :return: DataFrame of merged games
+    """
 
-        Returns
-        -------
-        result : DataFrame
-    '''
     # Join every row to all others with the same game ID.
     joined = pd.merge(df, df, suffixes=['_A', '_B'],
                       on=['SEASON_ID', 'GAME_ID', 'GAME_DATE'])

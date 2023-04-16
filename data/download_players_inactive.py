@@ -1,6 +1,6 @@
 import pandas as pd
 from nba_api.stats.endpoints import playercareerstats
-from connect_sqlite import connect
+from connect_sqlite import connect, get_current_time
 
 
 def download_allplayerseasons(player_ids):
@@ -17,26 +17,19 @@ def download_allplayerseasons(player_ids):
             id = player_ids[-1]
 
             if len(allplayerseasons) == 0:
-                print(f'Initiating download with player {id}...')
                 playercareer = playercareerstats.PlayerCareerStats(player_id=id, timeout=100)
                 allplayerseasons = playercareer.get_data_frames()[0]
 
             elif id not in list(allplayerseasons['PLAYER_ID']):
-                print(f'Downloading player {id}...')
                 playercareer = playercareerstats.PlayerCareerStats(player_id=id, timeout=100)
                 allplayerseasons = pd.concat([allplayerseasons, playercareer.get_data_frames()[0]])
-
-            else:
-                print(f'Already have player {id}.')
 
             player_ids.pop()
 
         except Exception as e:
-            print(f'Error downloading player {id}: {e}')
+            print(f'Error downloading inactive player {id}: {e}')
             continue
 
-        else:
-            print(f'Successfully downloaded player {id}.')
 
     allplayerseasons['PPG'] = allplayerseasons['PTS']/allplayerseasons['GP']
     allplayerseasons['RPG'] = allplayerseasons['REB']/allplayerseasons['GP']
@@ -55,3 +48,4 @@ if __name__ == '__main__':
         allplayerseasons = allplayerseasons.merge(player_info, how='right', left_on='PLAYER_ID', right_on='id')
 
         allplayerseasons.to_sql('PLAYERS_INACTIVE', conn, if_exists='replace')
+        print(F'{get_current_time()}: Updated Inactive Players Table')

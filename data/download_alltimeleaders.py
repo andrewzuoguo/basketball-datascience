@@ -1,10 +1,12 @@
 import pandas as pd
 from nba_api.stats.endpoints import alltimeleadersgrids
-from connect_sqlite import connect
+from connect_sqlite import connect, get_current_time
 
 def download_alltimeleaders():
     """
-    Download data of all-time NBA leaders and return as a pandas DataFrame.
+    Download data of all-time NBA leaders and return as a DataFrame
+
+    :return: DataFrame of top-10 all time leaders in 19 categories
     """
 
     leaders = alltimeleadersgrids.AllTimeLeadersGrids().get_data_frames()
@@ -45,3 +47,4 @@ if __name__ == '__main__':
     TABLE_NAME = 'ALLTIMELEADERS'
     with connect() as conn:
         leaders.to_sql(TABLE_NAME, conn, if_exists='replace')
+        print(F'{get_current_time()}: Updated All Time Leaders')
