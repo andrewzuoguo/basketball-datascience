@@ -82,6 +82,7 @@ def download_player_pt_shots(player_id, team_id, season, CONNECTION, current = F
 
         for i, df in enumerate(result):
             dfs[i] = pd.concat([dfs[i], df])
+            dfs[i]['SEASON'] = season
 
     if current:
         table_names = ['SHOT_OVERALL_CURRENT', 'SHOT_TYPE_CURRENT', 'SHOT_CLOCK_CURRENT', 'SHOT_DRIBBLE_CURRENT', 'SHOT_CLOSEDEF_CURRENT', 'SHOT_CLOSEDEF_10PLUS_CURRENT', 'SHOT_TOUCHTIME_CURRENT']
