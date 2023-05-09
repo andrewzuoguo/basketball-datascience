@@ -133,3 +133,30 @@
 04/30/2023, 06:00:03: Added 1 games, up to date through 04/29/2023
 04/30/2023, 06:00:04: Updated 539 League-Player Stats
 04/30/2023, 06:50:46: Updated 539 Shot Profile Stats from season ['2022-23']
+05/01/2023, 06:00:02: Added 2 games, up to date through 04/30/2023
+05/01/2023, 06:00:03: Updated 539 League-Player Stats
+05/01/2023, 06:54:47: Updated 539 Shot Profile Stats from season ['2022-23']
+05/02/2023, 06:00:03: Added 2 games, up to date through 05/01/2023
+05/02/2023, 06:00:04: Updated 539 League-Player Stats
+05/02/2023, 06:32:20: Updated 539 Shot Profile Stats from season ['2022-23']
+05/03/2023, 06:00:02: Added 2 games, up to date through 05/02/2023
+05/03/2023, 06:00:03: Updated 539 League-Player Stats
+05/03/2023, 06:44:45: Updated 539 Shot Profile Stats from season ['2022-23']
+05/04/2023, 06:00:01: Added 1 games, up to date through 05/03/2023
+05/04/2023, 06:00:02: Updated 539 League-Player Stats
+05/04/2023, 06:32:44: Updated 539 Shot Profile Stats from season ['2022-23']
+05/05/2023, 06:00:01: Added 1 games, up to date through 05/04/2023
+05/05/2023, 06:00:02: Updated 539 League-Player Stats
+05/05/2023, 06:34:13: Updated 539 Shot Profile Stats from season ['2022-23']
+05/06/2023, 06:00:01: Added 2 games, up to date through 05/05/2023
+05/06/2023, 06:00:02: Updated 539 League-Player Stats
+05/06/2023, 06:47:33: Updated 539 Shot Profile Stats from season ['2022-23']
+05/07/2023, 06:00:02: Added 2 games, up to date through 05/06/2023
+05/07/2023, 06:00:03: Updated 539 League-Player Stats
+05/07/2023, 06:41:17: Updated 539 Shot Profile Stats from season ['2022-23']
+05/08/2023, 06:00:02: Added 2 games, up to date through 05/07/2023
+05/08/2023, 06:00:03: Updated 539 League-Player Stats
+05/08/2023, 06:44:38: Updated 539 Shot Profile Stats from season ['2022-23']
+05/09/2023, 06:00:02: Added 2 games, up to date through 05/08/2023
+05/09/2023, 06:00:04: Updated 539 League-Player Stats
+05/09/2023, 06:51:50: Updated 539 Shot Profile Stats from season ['2022-23']
