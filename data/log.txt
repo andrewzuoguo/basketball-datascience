@@ -166,3 +166,9 @@
 05/11/2023, 06:00:02: Added 2 games, up to date through 05/10/2023
 05/11/2023, 06:00:03: Updated 539 League-Player Stats
 05/11/2023, 06:35:05: Updated 539 Shot Profile Stats from season ['2022-23']
+05/12/2023, 06:09:37: Added 2 games, up to date through 05/11/2023
+05/12/2023, 06:09:38: Updated 539 League-Player Stats
+Encountered Error while downloading Player-Point-Shots  HTTPSConnectionPool(host='stats.nba.com', port=443): Read timed out. (read timeout=30)
+Encountered Error while downloading Player-Point-Shots  HTTPSConnectionPool(host='stats.nba.com', port=443): Read timed out. (read timeout=30)
+Encountered Error while downloading Player-Point-Shots  HTTPSConnectionPool(host='stats.nba.com', port=443): Read timed out. (read timeout=30)
+05/12/2023, 09:16:13: Updated 539 Shot Profile Stats from season ['2022-23']
