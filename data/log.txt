@@ -172,3 +172,9 @@
 05/13/2023, 06:14:23: Added 2 games, up to date through 05/12/2023
 05/13/2023, 06:14:24: Updated 539 League-Player Stats
 05/13/2023, 11:24:43: Updated 539 Shot Profile Stats from season ['2022-23']
+05/14/2023, 11:30:01: Added 0 games, up to date through 05/13/2023
+05/14/2023, 11:30:02: Updated 539 League-Player Stats
+05/14/2023, 12:18:40: Updated 539 Shot Profile Stats from season ['2022-23']
+05/15/2023, 11:30:01: Added 1 games, up to date through 05/14/2023
+05/15/2023, 11:30:02: Updated 539 League-Player Stats
+05/15/2023, 13:14:07: Updated 539 Shot Profile Stats from season ['2022-23']
